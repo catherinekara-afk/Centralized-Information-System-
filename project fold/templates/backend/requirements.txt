@@ -1,0 +1,5 @@
+Flask>=2.0
+# optional extras
+# add other packages below if you introduce new dependencies
+PyJWT>=2.0
+Gunicorn>=21.2
