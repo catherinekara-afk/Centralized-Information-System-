@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Student Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --secondary: #06B6D4;
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --border: #E2E8F0;
+            --error: #EF4444;
+            --success: #10B981;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .signup-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 48px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--bg-main);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .role-option {
+            position: relative;
+        }
+
+        .role-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .role-label {
+            display: block;
+            padding: 14px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            background: white;
+        }
+
+        .role-option input[type="radio"]:checked + .role-label {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .role-label:hover {
+            border-color: var(--primary);
+        }
+
+        .subject-group {
+            margin-top: 6px;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .subject-option {
+            position: relative;
+        }
+
+        .subject-option input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .subject-label {
+            display: block;
+            padding: 14px;
+            text-align: center;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 14px;
+            background: white;
+        }
+
+        .subject-option input[type="checkbox"]:checked + .subject-label {
+            border-color: var(--secondary);
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .subject-label:hover {
+            border-color: var(--secondary);
+        }
+
+        .subject-helper {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+            margin-top: 24px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .alert {
+            padding: 14px 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.error {
+            background: #FEE2E2;
+            border: 1px solid #FECACA;
+            color: #991B1B;
+        }
+
+        .alert.success {
+            background: #D1FAE5;
+            border: 1px solid #A7F3D0;
+            color: #065F46;
+        }
+
+        .footer-links {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 32px 24px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .role-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="logo-section">
+            <div class="logo">SM</div>
+            <h1>Create Account</h1>
+            <p class="subtitle">Join the Student Management System</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="signupForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="John Doe" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="new-password">
+                <div class="password-requirements">At least 6 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+                <label>I am a:</label>
+                <div class="role-selector">
+                    <div class="role-option">
+                        <input type="radio" id="roleStudent" name="role" value="student" checked>
+                        <label for="roleStudent" class="role-label">Student</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="roleStaff" name="role" value="staff">
+                        <label for="roleStaff" class="role-label">Staff</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" id="roleAdmin" name="role" value="admin">
+                        <label for="roleAdmin" class="role-label">Admin</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group subject-group" id="subjectGroup">
+                <label id="subjectLabel">Subjects you want to study</label>
+                <div class="subject-grid">
+                    <div class="subject-option">
+                        <input type="checkbox" id="subjectMaths" name="subjects" value="maths">
+                        <label for="subjectMaths" class="subject-label">Maths</label>
+                    </div>
+                    <div class="subject-option">
+                        <input type="checkbox" id="subjectBio" name="subjects" value="bio">
+                        <label for="subjectBio" class="subject-label">Bio</label>
+                    </div>
+                    <div class="subject-option">
+                        <input type="checkbox" id="subjectChem" name="subjects" value="chem">
+                        <label for="subjectChem" class="subject-label">Chem</label>
+                    </div>
+                    <div class="subject-option">
+                        <input type="checkbox" id="subjectPhysics" name="subjects" value="physics">
+                        <label for="subjectPhysics" class="subject-label">Physics</label>
+                    </div>
+                </div>
+                <div class="subject-helper" id="subjectHelp">Select one or more subjects.</div>
+            </div>
+
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+
+        <div class="footer-links">
+            Already have an account? <a href="login.html">Sign in</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+
+        function showAlert(message, type = 'error') {
+            const alert = document.getElementById('alert');
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        function getSelectedRole() {
+            const roleInput = document.querySelector('input[name="role"]:checked');
+            return roleInput ? roleInput.value : 'student';
+        }
+
+        function getSelectedSubjects() {
+            const checked = Array.from(document.querySelectorAll('input[name="subjects"]:checked'));
+            return checked.map((input) => input.value);
+        }
+
+        function clearSubjects() {
+            document.querySelectorAll('input[name="subjects"]').forEach((input) => {
+                input.checked = false;
+            });
+        }
+
+        function updateSubjectUI() {
+            const subjectGroup = document.getElementById('subjectGroup');
+            const subjectLabel = document.getElementById('subjectLabel');
+            const subjectHelp = document.getElementById('subjectHelp');
+            const role = getSelectedRole();
+
+            if (!subjectGroup) return;
+
+            if (role === 'admin') {
+                subjectGroup.style.display = 'none';
+                clearSubjects();
+                return;
+            }
+
+            subjectGroup.style.display = 'block';
+            if (subjectLabel) {
+                subjectLabel.textContent = role === 'staff'
+                    ? 'Subjects you want to teach'
+                    : 'Subjects you want to study';
+            }
+            if (subjectHelp) {
+                subjectHelp.textContent = 'Select one or more subjects.';
+            }
+        }
+
+        document.querySelectorAll('input[name="role"]').forEach((input) => {
+            input.addEventListener('change', updateSubjectUI);
+        });
+
+        updateSubjectUI();
+
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const role = getSelectedRole();
+            const subjects = role === 'admin' ? [] : getSelectedSubjects();
+
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                showAlert('Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters long');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('Please enter a valid email address');
+                return;
+            }
+
+            if ((role === 'student' || role === 'staff') && subjects.length === 0) {
+                showAlert('Please select at least one subject');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: email,
+                        name: name,
+                        password: password,
+                        role: role,
+                        requested_role: role,
+                        subjects: subjects
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    showAlert(data.error || 'Registration failed');
+                    return;
+                }
+
+                showAlert('Account created. Awaiting admin approval.', 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+            } catch (err) {
+                console.error('Signup error:', err);
+                showAlert('Cannot reach the server. Make sure Flask (app.py) is running on port 5000.');
+            }
+        });
+
+        // Real-time password match validation
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = 'var(--error)';
+            } else {
+                this.style.borderColor = 'var(--border)';
+            }
+        });
+    </script>
+</body>
+</html>

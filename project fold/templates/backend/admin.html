@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Management System</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+                <button class="menu-toggle" id="menuToggle">☰</button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#dashboard" class="nav-link active" data-section="dashboard">📊 Dashboard</a></li>
+                    <li><a href="#students" class="nav-link" data-section="students">👨‍🎓 Students</a></li>
+                    <li><a href="#staff" class="nav-link" data-section="staff">👨‍💼 Staff</a></li>
+                    <li><a href="#admins" class="nav-link" data-section="admins">👤 Admin Members</a></li>
+                    <li><a href="#approvals" class="nav-link" data-section="approvals">Pending Approvals</a></li>
+                    <li><a href="#reports" class="nav-link" data-section="reports">📋 Reports</a></li>
+                    <li><a href="#settings" class="nav-link" data-section="settings">⚙️ Settings</a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search...">
+                        <button>🔍</button>
+                    </div>
+                    <div class="user-profile">
+                        <span>Admin User</span>
+                        <span class="profile-icon">👤</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section-content active">
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <h3>Total Students</h3>
+                        <p class="stat-number" id="totalStudents">0</p>
+                        <p class="stat-label">Active students</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Staff</h3>
+                        <p class="stat-number" id="totalStaff">0</p>
+                        <p class="stat-label">Active staff members</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Admins</h3>
+                        <p class="stat-number" id="totalAdmins">0</p>
+                        <p class="stat-label">Admin members</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Pending Approvals</h3>
+                        <p class="stat-number" id="pendingApprovals">0</p>
+                        <p class="stat-label">Awaiting approval</p>
+                    </div>
+                </div>
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <div id="activityLog" class="activity-list">
+                        <p class="empty-state">No recent activity</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Students Section -->
+            <section id="students" class="section-content">
+                <div class="section-header">
+                    <h2>Manage Students</h2>
+                    <button class="btn btn-primary" id="addStudentBtn">+ Add Student</button>
+                </div>
+                <div class="filters">
+                    <input type="text" placeholder="Search students..." id="studentSearch">
+                    <select id="studentFilter">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Class</th>
+                            <th>Subjects</th>
+                            <th>Fee Balance</th>
+                            <th>Status</th>
+                            <th>Enrollment Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsTableBody">
+                        <tr class="empty-row">
+                            <td colspan="9" class="empty-state">No students found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Staff Section -->
+            <section id="staff" class="section-content">
+                <div class="section-header">
+                    <h2>Manage Staff</h2>
+                    <button class="btn btn-primary" id="addStaffBtn">+ Add Staff</button>
+                </div>
+                <div class="filters">
+                    <input type="text" placeholder="Search staff..." id="staffSearch">
+                    <select id="staffFilter">
+                        <option value="">All Departments</option>
+                        <option value="teaching">Teaching</option>
+                        <option value="administrative">Administrative</option>
+                        <option value="support">Support</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Position</th>
+                            <th>Subjects</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="staffTableBody">
+                        <tr class="empty-row">
+                            <td colspan="8" class="empty-state">No staff members found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Admin Members Section -->
+            <section id="admins" class="section-content">
+                <div class="section-header">
+                    <h2>Manage Admin Members</h2>
+                    <button class="btn btn-primary" id="addAdminBtn">+ Add Admin</button>
+                </div>
+                <div class="filters">
+                    <input type="text" placeholder="Search admin members..." id="adminSearch">
+                    <select id="adminFilter">
+                        <option value="">All Roles</option>
+                        <option value="super_admin">Super Admin</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="editor">Editor</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Permissions</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminsTableBody">
+                        <tr class="empty-row">
+                            <td colspan="7" class="empty-state">No admin members found</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Pending Approvals Section -->
+            <section id="approvals" class="section-content">
+                <div class="section-header">
+                    <h2>Pending Approvals</h2>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Requested Role</th>
+                            <th>Requested Subjects</th>
+                            <th>Approve Subjects</th>
+                            <th>Assign Role</th>
+                            <th>Requested At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="approvalsTableBody">
+                        <tr class="empty-row">
+                            <td colspan="9" class="empty-state">No pending approvals</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Reports Section -->
+            <section id="reports" class="section-content">
+                <div class="section-header">
+                    <h2>Reports</h2>
+                    <button class="btn btn-primary" id="generateReportBtn">📄 Generate Report</button>
+                </div>
+                <div class="reports-grid">
+                    <div class="report-card">
+                        <h3>Students by Class</h3>
+                        <canvas id="studentChart"></canvas>
+                    </div>
+                    <div class="report-card">
+                        <h3>Staff Distribution</h3>
+                        <canvas id="staffChart"></canvas>
+                    </div>
+                </div>
+                <div class="report-card" style="margin-top: 20px;">
+                    <h3>Student Report</h3>
+                    <div class="filters" style="margin-top: 10px;">
+                        <select id="reportClassFilter">
+                            <option value="">All Classes</option>
+                        </select>
+                        <button class="btn btn-primary" id="loadStudentReportBtn">Load Report</button>
+                    </div>
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Class</th>
+                                <th>Attendance</th>
+                                <th>Grades</th>
+                                <th>Fee Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentReportTableBody">
+                            <tr class="empty-row">
+                                <td colspan="6" class="empty-state">No data loaded</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="report-card" style="margin-top: 20px;">
+                    <h3>Staff Activities</h3>
+                    <div class="filters" style="margin-top: 10px;">
+                        <select id="staffActivityStaff">
+                            <option value="">Select Staff</option>
+                        </select>
+                        <input type="text" id="staffActivityClass" placeholder="Class name">
+                        <input type="number" id="staffActivityTaken" placeholder="Lectures taken" min="0">
+                        <input type="number" id="staffActivityMissed" placeholder="Lectures missed" min="0">
+                        <button class="btn btn-primary" id="saveStaffActivityBtn">Save Activity</button>
+                    </div>
+                    <table class="data-table" style="margin-top: 15px;">
+                        <thead>
+                            <tr>
+                                <th>Staff</th>
+                                <th>Class</th>
+                                <th>Lectures Taken</th>
+                                <th>Lectures Missed</th>
+                                <th>Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffActivityTableBody">
+                            <tr class="empty-row">
+                                <td colspan="5" class="empty-state">No staff activity data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="section-content">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                    <div class="section-actions">
+                        <button class="btn btn-secondary" id="loadAuditBtn">Refresh Logs</button>
+                    </div>
+                </div>
+                <div class="settings-container">
+                    <div class="settings-group audit-group">
+                        <h3>Audit Logs</h3>
+                        <p class="muted-text">Latest system activity (last 100)</p>
+                        <div class="audit-table-wrap"><table class="data-table audit-table">
+                            <thead>
+                                <tr>
+                                    <th>Actor</th>
+                                    <th>Action</th>
+                                    <th>Target</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="auditLogTableBody">
+                                <tr class="empty-row">
+                                    <td colspan="4" class="empty-state">No audit logs loaded</td>
+                                </tr>
+                            </tbody>
+                        </table></div>
+                    </div>
+                    <div class="settings-group backup-group">
+                        <h3>Data & Backup</h3>
+                        <div class="setting-item">
+                            <label>Download Backup (.db)</label>
+                            <button class="btn btn-primary" id="downloadBackupBtn">Download</button>
+                        </div>
+                        <div class="setting-item">
+                            <label>Restore Backup</label>
+                            <div class="backup-restore">
+                                <input type="file" id="restoreBackupFile" accept=".db">
+                                <button class="btn btn-secondary" id="restoreBackupBtn">Restore</button>
+                            </div>
+                        </div>
+                        <p class="muted-text">Restoring replaces your current database. Restart the server after restore.</p>
+                    </div>
+                    <div class="settings-group password-group">
+                        <h3>Change Password</h3>
+                        <div class="password-grid">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword">
+                        </div>
+                        </div>
+                        <button class="btn btn-primary" id="changePasswordBtn">Update Password</button>
+                    </div>
+                </div>
+            </section>
+
+</main>
+    </div>
+
+    <!-- Modal for Adding/Editing Records -->
+    <div id="recordModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modalTitle">Add Record</h2>
+            <form id="recordForm">
+                <div id="formFields"></div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Updating Fee Balance -->
+    <div id="feeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-fee-modal">&times;</span>
+            <h2>Update Fee Balance</h2>
+            <div class="form-group">
+                <label>Student</label>
+                <div id="feeStudentName">-</div>
+            </div>
+            <div class="form-group">
+                <label for="feeBalanceInput">Fee Balance</label>
+                <input type="number" id="feeBalanceInput" min="0" step="0.01">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-primary" id="saveFeeBtn">Save</button>
+                <button type="button" class="btn btn-secondary" id="cancelFeeBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for Assigning Staff -->
+    <div id="assignModal" class="modal">
+        <div class="modal-content">
+            <span class="close-assign-modal">&times;</span>
+            <h2>Assign Staff to Student</h2>
+            <div class="form-group">
+                <label>Student</label>
+                <div id="assignStudentName">-</div>
+            </div>
+            <div id="assignSubjectsContainer" class="assign-container"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-primary" id="saveAssignBtn">Save Assignments</button>
+                <button type="button" class="btn btn-secondary" id="cancelAssignBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="notificationToast" class="notification-toast"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Student Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-dark: #4338CA;
+            --secondary: #06B6D4;
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --border: #E2E8F0;
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .login-container {
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            max-width: 440px;
+            width: 100%;
+            padding: 48px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-section { text-align: center; margin-bottom: 40px; }
+
+        .logo {
+            width: 64px; height: 64px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            margin: 0 auto 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: 700; color: white;
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+        }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+        .subtitle { color: var(--text-secondary); font-size: 15px; }
+
+        .form-group { margin-bottom: 24px; }
+
+        label { display: block; font-weight: 500; margin-bottom: 8px; color: var(--text-primary); font-size: 14px; }
+
+        input[type="email"], input[type="password"] {
+            width: 100%; padding: 14px 16px;
+            border: 2px solid var(--border); border-radius: 12px;
+            font-size: 15px; font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease; background: var(--bg-main);
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus {
+            outline: none; border-color: var(--primary);
+            background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        .role-selector { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
+        .role-option { position: relative; }
+        .role-option input[type="radio"] { position: absolute; opacity: 0; }
+
+        .role-label {
+            display: block; padding: 14px; text-align: center;
+            border: 2px solid var(--border); border-radius: 12px;
+            cursor: pointer; transition: all 0.3s ease;
+            font-weight: 500; font-size: 14px; background: white;
+        }
+
+        .role-option input[type="radio"]:checked + .role-label {
+            border-color: var(--primary); background: var(--primary);
+            color: white; transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .role-label:hover { border-color: var(--primary); }
+
+        .submit-btn {
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; border: none; border-radius: 12px;
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.4);
+        }
+
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(79, 70, 229, 0.5); }
+        .submit-btn:active { transform: translateY(0); }
+        .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .alert {
+            padding: 14px 16px; border-radius: 12px; margin-bottom: 24px;
+            font-size: 14px; display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert.error  { background: #FEE2E2; border: 1px solid #FECACA; color: #991B1B; }
+        .alert.success { background: #D1FAE5; border: 1px solid #A7F3D0; color: #065F46; }
+
+        .footer-links { margin-top: 32px; text-align: center; font-size: 14px; color: var(--text-secondary); }
+        .footer-links a { color: var(--primary); text-decoration: none; font-weight: 500; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+        @media (max-width: 480px) {
+            .login-container { padding: 32px 24px; }
+            h1 { font-size: 28px; }
+            .role-selector { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo-section">
+            <div class="logo">SM</div>
+            <h1>Welcome Back</h1>
+            <p class="subtitle">Sign in to your account</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password">
+            </div>
+
+            <div class="role-selector">
+                <div class="role-option">
+                    <input type="radio" id="roleStudent" name="role" value="student" checked>
+                    <label for="roleStudent" class="role-label">Student</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="roleStaff" name="role" value="staff">
+                    <label for="roleStaff" class="role-label">Staff</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="roleAdmin" name="role" value="admin">
+                    <label for="roleAdmin" class="role-label">Admin</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">Sign In</button>
+        </form>
+
+        <div class="footer-links">
+            Don't have an account? <a href="signup.html">Sign up</a>
+        </div>
+    </div>
+
+    <script src="../FrontEnd/static/js/login.js"></script>
+</body>
+</html>
