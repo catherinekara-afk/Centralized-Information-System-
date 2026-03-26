@@ -1,7 +1,7 @@
 // Student Dashboard JavaScript
 
 // Configuration
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'https://centralized-information-system.onrender.com/';
 
 function apiFetch(url, options = {}) {
     const headers = options.headers ? { ...options.headers } : {};
