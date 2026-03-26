@@ -1,6 +1,6 @@
 // ─── Config ────────────────────────────────────────────────
 // Flask runs on port 5000. All requests go there.
-const API_BASE = 'http://localhost:5000';
+const API_BASE = 'https://centralized-information-system.onrender.com/';
 
 // ─── Helpers ───────────────────────────────────────────────
 function showAlert(message, type = 'error') {
