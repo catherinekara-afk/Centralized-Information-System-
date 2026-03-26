@@ -1,7 +1,7 @@
 // Admin Panel JavaScript
 
 // Configuration
-const API_BASE = 'https://centralized-information-system.onrender.com/';
+const API_BASE = 'https://centralized-information-system.onrender.com';
 const SUBJECT_OPTIONS = [
     { value: 'maths', label: 'Maths' },
     { value: 'bio', label: 'Bio' },
